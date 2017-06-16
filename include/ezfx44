@@ -19,6 +19,8 @@ private:
 	Node<T>* _nil;
 public:
 	RBT();
+	~RBT();
+	void delete_tree(Node<T>*);
 	bool color_(const T&) const;
 	Node<T>* root_() const;
 	Node<T>* nil_()const;
@@ -37,6 +39,44 @@ RBT<T>::RBT()
 	_nil->_left = _nil->_parent = _nil->_right = nullptr;
 	_nil->_color = black;
 	_root = _nil;
+}
+
+template<typename T>
+RBT<T>::~RBT()
+{
+	delete_tree(_root);
+}
+
+template<typename T>
+void RBT<T>::delete_tree(Node<T>* temp)
+{
+	if (!temp)
+	{
+		return;
+	}
+	
+	if(temp == temp->_parent->_left)
+	{
+		temp->_parent->_left = nullptr;	
+	}
+	
+	if(temp == temp->_parent->_right)
+	{
+		temp->_parent->_right = nullptr;	
+	}
+	
+	if (temp->_left)
+	{
+		delete_tree(temp->_left);
+		temp->_left = nullptr;
+	}
+
+	if (temp->_right)
+	{
+		delete_tree(temp->_right);
+		temp->_right = nullptr;
+	}
+	delete temp;
 }
 
 template<typename T>

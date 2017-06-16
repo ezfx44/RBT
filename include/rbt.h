@@ -45,6 +45,10 @@ template<typename T>
 RBT<T>::~RBT()
 {
 	delete_tree(_root);
+	delete _nil->_left;
+	delete _nil->_right;
+	delete _nil->_parent;
+	delete _nil;
 }
 
 template<typename T>
@@ -54,18 +58,22 @@ void RBT<T>::delete_tree(Node<T>* temp)
 	{
 		return;
 	}
-	
-	if (temp->_left)
+	while (temp->_left != _nil)
 	{
 		delete_tree(temp->_left);
 	}
+
+	while (temp->_right != _nil)
+	{
+		delete_tree(temp->_right);
+	}
+	delete temp;
+}
 
 	if (temp->_right)
 	{
 		delete_tree(temp->_right);
 	}
-	delete temp->_left;
-	delete temp->_right;
 	delete temp;
 }
 

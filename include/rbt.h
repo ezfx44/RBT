@@ -55,27 +55,17 @@ void RBT<T>::delete_tree(Node<T>* temp)
 		return;
 	}
 	
-	if(temp == temp->_parent->_left)
-	{
-		temp->_parent->_left = nullptr;	
-	}
-	
-	if(temp == temp->_parent->_right)
-	{
-		temp->_parent->_right = nullptr;	
-	}
-	
 	if (temp->_left)
 	{
 		delete_tree(temp->_left);
-		temp->_left = nullptr;
 	}
 
 	if (temp->_right)
 	{
 		delete_tree(temp->_right);
-		temp->_right = nullptr;
 	}
+	delete temp->_left;
+	delete temp->_right;
 	delete temp;
 }
 
